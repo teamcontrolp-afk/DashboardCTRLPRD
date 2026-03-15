@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planta 3D – Mapa de Tanques</title>
+<title>Planta 3D – Mapa de Tanques v3.1</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0e14;color:#e6edf3;font-family:system-ui,sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column}
@@ -175,7 +175,7 @@ canvas{display:block}
 <body>
 
 <div id="header">
-  <h1>🏭 Planta · Tanques 3D</h1>
+  <h1>🏭 Planta · Tanques 3D <span style="font-size:9px;color:#40484f;font-weight:400">v3.1</span></h1>
   <div class="sep"></div>
   <div class="fg"><label>Línea:</label></div>
   <div class="lpills">
@@ -226,7 +226,7 @@ canvas{display:block}
   <div class="sep"></div>
   <button class="detbtn" id="detbtn" onclick="toggleDetail()">📋 Detalle</button>
   <button class="cambtn" id="cambtn" onclick="toggleCambio()">📝 Informar cambio</button>
-  <span class="hint">Click tanque · Drag rotar · Scroll zoom</span>
+  <span class="hint">Click tanque · Drag rotar · Click derecho mover · Scroll zoom</span>
 </div>
 
 <div id="main">
@@ -385,80 +385,83 @@ const LCOL={
 };
 // TK: [id, lb, tke, loc, cap, fromLines[], toDests[], status, familia, gx, gz, contiene, puedeContener]
 const TK=[
-  ["t075","075","TKE 000520","Sala de Tanques",15,["Línea 4","Línea 1"],["532","650-I"],"En uso","S/A real",6,2,"S/A real","Leche"],
-  ["t125","125","TKE 000543","Sala de Tanques",15,["Línea 1"],["DTG"],"En uso","Leche real",7,2,"Leche, Soja","Leche, Soja"],
-  ["t126","126","TKE 000544","Sala de Tanques",15,["Línea 2"],["Aasted"],"En uso","Blanco real",8,2,"Blanco real","Blanco real"],
-  ["t073","073","TKE 000518","Sala de Tanques",15,["Línea 1"],["Aasted"],"En uso","Leche real",9,2,"Leche, Soja","Leche, Soja"],
-  ["t163","163","TKE 000570","Sala de Tanques",15,["Línea 1","Línea 3"],["Aasted","Mikroverk","DTG"],"En uso","Leche real",10,2,"Leche, Soja","Leche, Soja"],
-  ["t074","074","TKE 000519","Sala de Tanques",15,["Línea 4","Línea 1"],["532","650-I"],"En uso","S/A real",11,2,"S/A real","Leche"],
-  ["t002","002","TKE 000490","Sala de Tanques",15,["Línea 1","Línea 4"],["650"],"En uso","Compound leche",6,3.5,"Leche compound","Leche, compound"],
-  ["t039","039","TKE 000502","Sala de Tanques",15,["Línea 1"],["Aasted","275-I","Mikroverk","Bindler"],"En uso","Leche real",7,3.5,"Leche","Leche"],
-  ["t027","027","TKE 000501","Sala de Tanques",15,["Línea 2"],["275-I","Bindler"],"En uso","Blanco real",8,3.5,"Blanco real","Blanco real"],
-  ["t006","006","TKE 000494","Sala de Tanques",15,["Línea 2","Línea 3"],["650"],"En uso","Blanco real y cp",9,3.5,"Blanco real y cp","Blanco real, compound"],
-  ["t072","072","TKE 000517","Sala de Tanques",15,["Línea 1","Línea 3","Línea 4"],["Aasted","275-I","532","650-I"],"En uso","S/A real",10,3.5,"S/A real","S/A real"],
-  ["t001","001","TKE 000489","Sala de Tanques",15,["Línea 1","Línea 4"],["DTG"],"En uso","S/A real",11,3.5,"S/A real","S/A real"],
-  ["t076","076","TKE 000521","Sala de Tanques",15,["Línea 2"],["532","650-I","Bindler"],"En uso","Blanco real",6,5,"Blanco real","Blanco real"],
-  ["t003","003","TKE 000491","Sala de Tanques",15,["Línea 2"],["Aasted","Mikroverk","532","650-I","Bindler"],"En uso","Blanco real",7,5,"Blanco real","Blanco real"],
-  ["t004","004","TKE 000492","Sala de Tanques",15,["Línea 1"],["Aasted","275-I","Mikroverk","532","650-I","Bindler"],"En uso","Leche real",8,5,"Leche real","Leche real"],
-  ["t005","005","TKE 000493","Sala de Tanques",15,["Línea 1"],["Aasted","532","650-I","Bindler"],"En uso","Leche real",9,5,"Leche real","Leche real"],
-  ["t071","071","TKE 000516","Sala de Tanques",15,["Línea 1"],["275-I","532","650-I","Mikroverk","Bindler"],"En uso","S/A real",10,5,"S/A real","S/A real"],
-  ["t077","077","TKE 000522","Sala de Tanques",15,["Línea 2"],["Aasted","532","650-I","Bindler"],"En uso","Blanco real",11,5,"Blanco real","Blanco real"],
-  ["t040","040","TKE 000503","Aasted/275-I",5,["Línea 3"],["Aasted"],"En uso","Relleno claro",13,1,"Relleno claro","Relleno claro"],
-  ["t121","121","TKE 000539","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"Fuera de uso","Rellenos oscuros y claros",14,1,"Rellenos oscuros y claros","Rellenos"],
-  ["t637","REL009","TKE 000637","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"Fuera de uso","Rellenos oscuros y claros",15,1,"Rellenos oscuros y claros","Rellenos"],
-  ["t123","123","TKE 000541","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"En uso","Rellenos oscuros y claros",16,1,"Rellenos oscuros y claros","Rellenos"],
-  ["t2250","2250","TKE 002250","Aasted/275-I",5,["Línea 2"],["DTG","275-I"],"En uso","Blanco real",17,1,"Blanco real","Blanco real"],
-  ["t4459","4459","TKE 004459","Aasted/275-I",5,["Línea 2"],["Aasted","275-I"],"En uso","Relleno blanco",18,1,"Relleno blanco","Relleno blanco"],
-  ["t096","096","TKE 000524","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"En uso","Relleno oscuro",14,4,"Relleno oscuro","Relleno oscuro"],
-  ["t095","095","TKE 000523","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"Fuera de uso","Relleno oscuro",15,4,"Relleno oscuro","Relleno oscuro"],
-  ["t068","068","TKE 000514","Delver",5,["Línea 1","Línea 3"],["Sin envío"],"Fuera de uso","Leche real",16,4,"Leche real","Leche real"],
-  ["t067","067","TKE 000513","Delver",5,["Línea 2"],["Obleas I","Obleas II"],"En uso","Blanco real",17,4,"Blanco real","Blanco real"],
-  ["t061","061","TKE 000509","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"Fuera de uso","Blanco real",18,4,"Blanco real","Compound blanco"],
-  ["t060","060","TKE 000508","Delver",5,["Línea 1","Línea 3"],["Obleas I","Obleas II"],"En uso","Leche y compound",14,5.5,"Leche y compound","Leche y compound"],
-  ["t140","140","TKE 000555","Delver",5,["Línea 1","Línea 3"],["Obleas I","Obleas II"],"En uso","Leche y compound",15,5.5,"Leche y compound","Leche y compound"],
-  ["t1584","1584","TKE 001584","Delver",15,["Línea 2"],["BOB","Bindler","Barras"],"En uso","Relleno blanco",16,5.5,"Relleno blanco","Relleno blanco"],
-  ["t1585","1585","TKE 001585","Delver",15,["Línea 3"],["BOB","Barras"],"En uso","Relleno oscuro",17,5.5,"Relleno oscuro","Relleno oscuro"],
-  ["t168","168","TKE 000575","Delver",15,["Línea 3"],["BOB","Barras"],"En uso","Relleno oscuro",18,5.5,"Relleno oscuro","Relleno oscuro"],
-  ["t3270","3270","TKE 003270","Centro de masa",15,["Línea 3"],["Bindler"],"En uso","Relleno oscuro y SK tabletas",8,7.5,"Relleno oscuro y SK tabletas","Relleno oscuro"],
-  ["t14","14","TKE 000498","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",9,7.5,"Relleno claro","Relleno claro"],
-  ["t132","132","TKE 000550","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",10,7.5,"Relleno claro","Relleno claro"],
-  ["t3271","3271","TKE 003271","Centro de masa",15,["Línea 2"],["Obleas I","Obleas II"],"En uso","Relleno blanco",8,9,"Relleno blanco","Relleno blanco"],
-  ["t2240","2240","TKE 002240","Centro de masa",15,["Línea 3"],["Barras"],"En uso","Relleno claro",9,9,"Relleno claro","Relleno claro"],
-  ["t015","15","TKE 000497","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",10,9,"Relleno claro","Relleno claro"],
-  ["t059","059","TKE 000595","Centro de masa",5,["Línea 3"],["Sin envío"],"Fuera de uso","Relleno claro",9,10.5,"Relleno claro","Relleno claro"],
-  ["t083","083","TKE 002713","BOB",15,["Línea 3","Línea 4","Línea 1"],["BOB","Barras"],"En uso","Compound S/A",6,13,"Compound S/A","Compound S/A"],
-  ["t056","056","TKE 002712","BOB",15,["Línea 1","Línea 3"],["BOB","Barras"],"En uso","S/A real",7,13,"S/A real","S/A real"],
-  ["t130","130","TKE 000548","BOB",15,["Línea 1","Línea 3"],["BOB","Barras"],"En uso","Leche real",8,13,"Leche real","Leche real"],
-  ["t017","017","TKE 000500","BOB",15,["Línea 1","Línea 3"],["Barras","Obleas I","Obleas II"],"En uso","Leche real",9,13,"Leche real","Leche real"],
-  ["t016","016","TKE 000499","BOB",15,["Línea 1"],["Barras","Obleas I","Obleas II"],"En uso","S/A real",10,13,"S/A real","S/A real"],
-  ["t3272","3272","TKE 003272","BOB",15,["Línea 1","Línea 3"],["Bindler"],"En uso","Leche real",11,13,"Leche real","Leche real"],
-  ["t116","116","TKE 000536","BOB",15,["Línea 2"],["Industriales"],"En uso","Blanco real",12,13,"Blanco real","Blanco real"],
-  ["t115","115","TKE 000535","BOB",15,["Línea 2"],["BOB"],"En uso","Blanco real",13,13,"Blanco real","Blanco real"],
-  ["t114","114","TKE 000534","BOB",15,["Línea 2"],["BOB"],"En uso","Compound blanco",14,13,"Compound blanco","Compound blanco"],
-  ["t117","117","TKE 000537","BOB",15,["Línea 1","Línea 3","Línea 4"],["Industriales"],"En uso","Leche y S/A real",15,13,"Leche y S/A real","Leche y S/A real"],
-  ["t124","124","TKE 000542","BOB",15,["Línea 1","Línea 3","Línea 4"],["Industriales"],"En uso","Leche y S/A real",17,13,"Leche y S/A real","Leche y S/A real"],
-  ["t2251","2251","TKE 002251","Terceros",15,["Línea 2"],["Smart 2"],"Fuera de uso","Blanco real",1,5.5,"Blanco real","Blanco real"],
-  ["t1165","1165","TKE 901165","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Relleno claro",2,5.5,"Relleno claro","Relleno claro"],
-  ["t2252","2252","TKE 002252","Terceros",15,["Línea 1"],["Terceros"],"En uso","Leche real",1,7,"Leche real","Leche real"],
-  ["t2253","2253","TKE 002253","Terceros",15,["Línea 1"],["Terceros"],"En uso","Relleno blanco",2,7,"Relleno blanco","Relleno blanco"],
-  ["t574","574","TKE 000574","Terceros",5,["Línea 2"],["Baldes"],"En uso","Relleno blanco",3,7,"Relleno blanco","Relleno blanco"],
-  ["t462","462","TKE 100462","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Compound y rellenos oscuros",1,8.5,"Compound y rellenos oscuros","Compound y rellenos oscuros"],
-  ["t465","465","TKE 100465","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Compound y rellenos oscuros",2,8.5,"Compound y rellenos oscuros","Compound y rellenos oscuros"],
-  ["t463","463","TKE 100463","Terceros",15,["Línea 1","Línea 4"],["Smart 1","Smart 2","DTG"],"En uso","Leche real",1,10,"Leche real","Leche real"],
-  ["t540","540","TKE 000540","Terceros",15,["Línea 2"],["Baldes","Terceros"],"En uso","Blanco real, compound y rellenos",2,10,"Blanco real, compound y rellenos","Blanco real, compound y rellenos"],
-  ["t611","611","TKE 900150","Terceros",15,["Línea 2"],["Baldes","Terceros"],"En uso","Blanco real, compound y rellenos",3,10,"Blanco real, compound y rellenos","Blanco real, compound y rellenos"],
-  ["t464","464","TKE 100464","Terceros",15,["Línea 1","Línea 4"],["Terceros"],"En uso","S/A real",1,12,"S/A real","S/A real"],
-  ["t120","120","TKE 000538","Terceros",5,["Línea 4"],["Terceros"],"Fuera de uso","S/A real",2,12,"S/A real","S/A real"],
-  ["tL04","L04","TKE 000609","Terceros",5,["Línea 4"],["Terceros"],"Fuera de uso","S/A real",3,12,"S/A real","S/A real"],
+  ["t075","075","TKE 000520","Sala de Tanques",15,["Línea 4","Línea 1"],["532","650-I"],"En uso","S/A real",15,1,"S/A real","Leche"],
+  ["t125","125","TKE 000543","Sala de Tanques",15,["Línea 1"],["DTG"],"En uso","Leche real",16,1,"Leche, Soja","Leche, Soja"],
+  ["t126","126","TKE 000544","Sala de Tanques",15,["Línea 2"],["Aasted"],"En uso","Blanco real",17,1,"Blanco real","Blanco real"],
+  ["t073","073","TKE 000518","Sala de Tanques",15,["Línea 1"],["Aasted"],"En uso","Leche real",18,1,"Leche, Soja","Leche, Soja"],
+  ["t163","163","TKE 000570","Sala de Tanques",15,["Línea 1","Línea 3"],["Aasted","Mikroverk","DTG"],"En uso","Leche real",19,1,"Leche, Soja","Leche, Soja"],
+  ["t074","074","TKE 000519","Sala de Tanques",15,["Línea 4","Línea 1"],["532","650-I"],"En uso","S/A real",20,1,"S/A real","Leche"],
+  ["t002","002","TKE 000490","Sala de Tanques",15,["Línea 1","Línea 4"],["650"],"En uso","Compound leche",15,2.5,"Leche compound","Leche, compound"],
+  ["t039","039","TKE 000502","Sala de Tanques",15,["Línea 1"],["Aasted","275-I","Mikroverk","Bindler"],"En uso","Leche real",16,2.5,"Leche","Leche"],
+  ["t027","027","TKE 000501","Sala de Tanques",15,["Línea 2"],["275-I","Bindler"],"En uso","Blanco real",17,2.5,"Blanco real","Blanco real"],
+  ["t006","006","TKE 000494","Sala de Tanques",15,["Línea 2","Línea 3"],["650"],"En uso","Blanco real y cp",18,2.5,"Blanco real y cp","Blanco real, compound"],
+  ["t072","072","TKE 000517","Sala de Tanques",15,["Línea 1","Línea 3","Línea 4"],["Aasted","275-I","532","650-I"],"En uso","S/A real",19,2.5,"S/A real","S/A real"],
+  ["t001","001","TKE 000489","Sala de Tanques",15,["Línea 1","Línea 4"],["DTG"],"En uso","S/A real",20,2.5,"S/A real","S/A real"],
+  ["t076","076","TKE 000521","Sala de Tanques",15,["Línea 2"],["532","650-I","Bindler"],"En uso","Blanco real",15,4,"Blanco real","Blanco real"],
+  ["t003","003","TKE 000491","Sala de Tanques",15,["Línea 2"],["Aasted","Mikroverk","532","650-I","Bindler"],"En uso","Blanco real",16,4,"Blanco real","Blanco real"],
+  ["t004","004","TKE 000492","Sala de Tanques",15,["Línea 1"],["Aasted","275-I","Mikroverk","532","650-I","Bindler"],"En uso","Leche real",17,4,"Leche real","Leche real"],
+  ["t005","005","TKE 000493","Sala de Tanques",15,["Línea 1"],["Aasted","532","650-I","Bindler"],"En uso","Leche real",18,4,"Leche real","Leche real"],
+  ["t071","071","TKE 000516","Sala de Tanques",15,["Línea 1"],["275-I","532","650-I","Mikroverk","Bindler"],"En uso","S/A real",19,4,"S/A real","S/A real"],
+  ["t077","077","TKE 000522","Sala de Tanques",15,["Línea 2"],["Aasted","532","650-I","Bindler"],"En uso","Blanco real",20,4,"Blanco real","Blanco real"],
+  ["t040","040","TKE 000503","Aasted/275-I",5,["Línea 3"],["Aasted"],"En uso","Relleno claro",15,-4,"Relleno claro","Relleno claro"],
+  ["t121","121","TKE 000539","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"Fuera de uso","Rellenos oscuros y claros",17,-5.5,"Rellenos oscuros y claros","Rellenos"],
+  ["t637","REL009","TKE 000637","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"Fuera de uso","Rellenos oscuros y claros",17,-4,"Rellenos oscuros y claros","Rellenos"],
+  ["t123","123","TKE 000541","Aasted/275-I",5,["Línea 3"],["Aasted","275-I"],"En uso","Rellenos oscuros y claros",19,-5.5,"Rellenos oscuros y claros","Rellenos"],
+  ["t2250","2250","TKE 002250","Aasted/275-I",5,["Línea 2"],["DTG","275-I"],"En uso","Blanco real",15,-5.5,"Blanco real","Blanco real"],
+  ["t4459","4459","TKE 004459","Aasted/275-I",5,["Línea 2"],["Aasted","275-I"],"En uso","Relleno blanco",19,-4,"Relleno blanco","Relleno blanco"],
+  ["t096","096","TKE 000524","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"En uso","Relleno oscuro",19,9.5,"Relleno oscuro","Relleno oscuro"],
+  ["t095","095","TKE 000523","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"Fuera de uso","Relleno oscuro",18,9.5,"Relleno oscuro","Relleno oscuro"],
+  ["t068","068","TKE 000514","Delver",5,["Línea 1","Línea 3"],["Sin envío"],"Fuera de uso","Leche real",17,9.5,"Leche real","Leche real"],
+  ["t067","067","TKE 000513","Delver",5,["Línea 2"],["Obleas I","Obleas II"],"En uso","Blanco real",16,9.5,"Blanco real","Blanco real"],
+  ["t061","061","TKE 000509","Delver",5,["Línea 3"],["Obleas I","Obleas II"],"Fuera de uso","Blanco real",15,9.5,"Blanco real","Compound blanco"],
+  ["t060","060","TKE 000508","Delver",5,["Línea 1","Línea 3"],["Obleas I","Obleas II"],"En uso","Leche y compound",14,9.5,"Leche y compound","Leche y compound"],
+  ["t140","140","TKE 000555","Delver",5,["Línea 1","Línea 3"],["Obleas I","Obleas II"],"En uso","Leche y compound",13,9.5,"Leche y compound","Leche y compound"],
+  ["t1584","1584","TKE 001584","Delver",15,["Línea 2"],["BOB","Bindler","Barras"],"En uso","Relleno blanco",12,9.5,"Relleno blanco","Relleno blanco"],
+  ["t1585","1585","TKE 001585","Delver",15,["Línea 3"],["BOB","Barras"],"En uso","Relleno oscuro",11,9.5,"Relleno oscuro","Relleno oscuro"],
+  ["t168","168","TKE 000575","Delver",15,["Línea 3"],["BOB","Barras"],"En uso","Relleno oscuro",10,9.5,"Relleno oscuro","Relleno oscuro"],
+  ["t3270","3270","TKE 003270","Centro de masa",15,["Línea 3"],["Bindler"],"En uso","Relleno oscuro y SK tabletas",5,7,"Relleno oscuro y SK tabletas","Relleno oscuro"],
+  ["t14","14","TKE 000498","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",6,7,"Relleno claro","Relleno claro"],
+  ["t132","132","TKE 000550","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",7,7,"Relleno claro","Relleno claro"],
+  ["t3271","3271","TKE 003271","Centro de masa",15,["Línea 2"],["Obleas I","Obleas II"],"En uso","Relleno blanco",5,8.5,"Relleno blanco","Relleno blanco"],
+  ["t2240","2240","TKE 002240","Centro de masa",15,["Línea 3"],["Barras"],"En uso","Relleno claro",6,8.5,"Relleno claro","Relleno claro"],
+  ["t015","15","TKE 000497","Centro de masa",15,["Línea 3"],["BOB","Obleas I","Obleas II"],"En uso","Relleno claro",7,8.5,"Relleno claro","Relleno claro"],
+  ["t059","059","TKE 000595","Centro de masa",5,["Línea 3"],["Sin envío"],"Fuera de uso","Relleno claro",6,10,"Relleno claro","Relleno claro"],
+  ["t083","083","TKE 002713","BOB",15,["Línea 3","Línea 4","Línea 1"],["BOB","Barras"],"En uso","Compound S/A",19,14,"Compound S/A","Compound S/A"],
+  ["t056","056","TKE 002712","BOB",15,["Línea 1","Línea 3"],["BOB","Barras"],"En uso","S/A real",18,14,"S/A real","S/A real"],
+  ["t130","130","TKE 000548","BOB",15,["Línea 1","Línea 3"],["BOB","Barras"],"En uso","Leche real",17,14,"Leche real","Leche real"],
+  ["t017","017","TKE 000500","BOB",15,["Línea 1","Línea 3"],["Barras","Obleas I","Obleas II"],"En uso","Leche real",15,14,"Leche real","Leche real"],
+  ["t016","016","TKE 000499","BOB",15,["Línea 1"],["Barras","Obleas I","Obleas II"],"En uso","S/A real",14,14,"S/A real","S/A real"],
+  ["t3272","3272","TKE 003272","BOB",15,["Línea 1","Línea 3"],["Bindler"],"En uso","Leche real",13,14,"Leche real","Leche real"],
+  ["t116","116","TKE 000536","BOB",15,["Línea 2"],["Industriales"],"En uso","Blanco real",11,14,"Blanco real","Blanco real"],
+  ["t115","115","TKE 000535","BOB",15,["Línea 2"],["BOB"],"En uso","Blanco real",9,14,"Blanco real","Blanco real"],
+  ["t114","114","TKE 000534","BOB",15,["Línea 2"],["BOB"],"En uso","Compound blanco",10,14,"Compound blanco","Compound blanco"],
+  ["t117","117","TKE 000537","BOB",15,["Línea 1","Línea 3","Línea 4"],["Industriales"],"En uso","Leche y S/A real",8,14,"Leche y S/A real","Leche y S/A real"],
+  ["t124","124","TKE 000542","BOB",15,["Línea 1","Línea 3","Línea 4"],["Industriales"],"En uso","Leche y S/A real",7,14,"Leche y S/A real","Leche y S/A real"],
+  ["t2251","2251","TKE 002251","Terceros",15,["Línea 2"],["Smart 2"],"Fuera de uso","Blanco real",-2,9.5,"Blanco real","Blanco real"],
+  ["t1165","1165","TKE 901165","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Relleno claro",-2,8,"Relleno claro","Relleno claro"],
+  ["t2252","2252","TKE 002252","Terceros",15,["Línea 1"],["Terceros"],"En uso","Leche real",-2,6.5,"Leche real","Leche real"],
+  ["t2253","2253","TKE 002253","Terceros",15,["Línea 1"],["Terceros"],"En uso","Relleno blanco",-1,6.5,"Relleno blanco","Relleno blanco"],
+  ["t574","574","TKE 000574","Terceros",5,["Línea 2"],["Baldes"],"En uso","Relleno blanco",0,6.5,"Relleno blanco","Relleno blanco"],
+  ["t462","462","TKE 100462","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Compound y rellenos oscuros",-2,5,"Compound y rellenos oscuros","Compound y rellenos oscuros"],
+  ["t465","465","TKE 100465","Terceros",15,["Línea 3"],["Baldes","Smart 2","Terceros"],"En uso","Compound y rellenos oscuros",-1,5,"Compound y rellenos oscuros","Compound y rellenos oscuros"],
+  ["t463","463","TKE 100463","Terceros",15,["Línea 1","Línea 4"],["Smart 1","Smart 2","DTG"],"En uso","Leche real",-2,3.5,"Leche real","Leche real"],
+  ["t540","540","TKE 000540","Terceros",15,["Línea 2"],["Baldes","Terceros"],"En uso","Blanco real, compound y rellenos",-1,3.5,"Blanco real, compound y rellenos","Blanco real, compound y rellenos"],
+  ["t611","611","TKE 900150","Terceros",15,["Línea 2"],["Baldes","Terceros"],"En uso","Blanco real, compound y rellenos",0,3.5,"Blanco real, compound y rellenos","Blanco real, compound y rellenos"],
+  ["t464","464","TKE 100464","Terceros",15,["Línea 1","Línea 4"],["Terceros"],"En uso","S/A real",-2,2,"S/A real","S/A real"],
+  ["t120","120","TKE 000538","Terceros",5,["Línea 4"],["Terceros"],"Fuera de uso","S/A real",-1,2,"S/A real","S/A real"],
+  ["tL04","L04","TKE 000609","Terceros",5,["Línea 4"],["Terceros"],"Fuera de uso","S/A real",0,2,"S/A real","S/A real"],
 ];
 
 const DESTS=[
-  {id:"Aasted",x:13.5,z:2.5},{id:"275-I",x:15,z:2.5},{id:"DTG",x:21,z:1},{id:"Mikroverk",x:21,z:3},
-  {id:"Bindler",x:21,z:7},{id:"Obleas I",x:21,z:5},{id:"Obleas II",x:21,z:9},
-  {id:"BOB",x:12,z:16},{id:"Barras",x:9,z:16},{id:"Industriales",x:6,z:16},
-  {id:"650",x:21,z:11},{id:"532",x:21,z:12},{id:"650-I",x:21,z:13},
-  {id:"Baldes",x:-1.5,z:10},{id:"Smart 2",x:-1.5,z:12},{id:"Terceros",x:-1.5,z:8},
-  {id:"Smart 1",x:-1.5,z:6},{id:"Sin envío",x:-1.5,z:14},
+  // Right side - more spread out (z step 2)
+  {id:"Aasted",x:25,z:1},{id:"275-I",x:25,z:3},{id:"DTG",x:25,z:5},
+  {id:"Mikroverk",x:25,z:7},{id:"Obleas I",x:25,z:9},{id:"Obleas II",x:25,z:11},
+  {id:"Bindler",x:25,z:13},{id:"650",x:25,z:14.5},{id:"532",x:25,z:16},{id:"650-I",x:25,z:17.5},
+  // Bottom
+  {id:"BOB",x:10,z:19},{id:"Barras",x:13,z:19},{id:"Industriales",x:16,z:19},
+  // Left side - more spread out
+  {id:"Terceros",x:-6,z:2},{id:"Baldes",x:-6,z:4.5},{id:"Smart 1",x:-6,z:7},
+  {id:"Smart 2",x:-6,z:9.5},{id:"Sin envío",x:-6,z:12},
 ];
 
 
@@ -485,8 +488,8 @@ rnd.shadowMap.enabled=true; rnd.setClearColor(0x0a0e14);
 const sc=new THREE.Scene();
 sc.fog=new THREE.FogExp2(0x0a0e14,0.014);
 const cam=new THREE.PerspectiveCamera(45,1,0.1,500);
-let theta=-0.25,phi=0.72,rad=36;
-const camT=new THREE.Vector3(10,0,6);
+let theta=-0.25,phi=0.72,rad=42;
+const camT=new THREE.Vector3(10,0,8);
 function updCam(){
   cam.position.x=camT.x+rad*Math.sin(phi)*Math.sin(theta);
   cam.position.y=camT.y+rad*Math.cos(phi);
@@ -499,23 +502,23 @@ const sun=new THREE.DirectionalLight(0xffffff,0.85);
 sun.position.set(12,30,20);sun.castShadow=true;sc.add(sun);
 const fill2=new THREE.DirectionalLight(0x4488ff,0.25);
 fill2.position.set(-10,10,-5);sc.add(fill2);
-const flr=new THREE.Mesh(new THREE.PlaneGeometry(80,70),new THREE.MeshLambertMaterial({color:0x0b1018}));
-flr.rotation.x=-Math.PI/2;flr.position.set(9,-0.02,8);flr.receiveShadow=true;sc.add(flr);
-const grid=new THREE.GridHelper(80,80,0x131c28,0x101820);
-grid.position.set(9,-0.01,8);sc.add(grid);
+const flr=new THREE.Mesh(new THREE.PlaneGeometry(110,90),new THREE.MeshLambertMaterial({color:0x0b1018}));
+flr.rotation.x=-Math.PI/2;flr.position.set(10,-0.02,9);flr.receiveShadow=true;sc.add(flr);
+const grid=new THREE.GridHelper(110,110,0x131c28,0x101820);
+grid.position.set(10,-0.01,9);sc.add(grid);
 
 // ─── SPRITE HELPER (defined early — used by zones and tanks) ─
 function mkSprite(text,scale,col){
-  const W=192,H=48;
+  const W=256,H=64;
   const cv2=document.createElement('canvas');cv2.width=W;cv2.height=H;
   const ctx=cv2.getContext('2d');
   ctx.clearRect(0,0,W,H);
-  ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=5;
+  ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=6;
   const cs=col===0xffffff?'#ffffff':col===0xaac8ff?'#aac8ff':col===0xff6666?'#ff8888':'#'+col.toString(16).padStart(6,'0');
-  ctx.fillStyle=cs;ctx.font='bold 22px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle=cs;ctx.font='bold 28px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillText(text,W/2,H/2);
   const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv2),depthTest:false,transparent:true}));
-  sp.scale.set(scale*3.5,scale*0.9,1);return sp;
+  sp.scale.set(scale*4.5,scale*1.1,1);return sp;
 }
 
 // ─── ZONE FLOOR MARKERS ──────────────────────────────────
@@ -529,25 +532,20 @@ function addZoneFloor(cx,cz,w,h,col,borderCol,label){
 }
 // Zone platforms matching original layout
 // Sala de Tanques: tanks at gx 6-11, gz 2-5
-addZoneFloor(8.5,3.5,7,4.5,0x0e1a10,0x1a5a2a,'SALA DE TANQUES');
-// Aasted/275-I: tanks at gx 13-18, gz 1
-addZoneFloor(15.5,1,7,2,0x0e1218,0x1a2a4a,'AASTED / 275-I');
-// Ex Delver: tanks at gx 14-18, gz 4-5.5
-addZoneFloor(16,4.8,6,3.5,0x140e0e,0x4a1a1a,'EX DELVER');
-// Centro de masa: tanks at gx 8-10, gz 7.5-10.5
-addZoneFloor(9,9,4,5.5,0x0e0e1a,0x2a2a50,'CENTRO DE MASA');
-// BOB: tanks at gx 6-17, gz 13
-addZoneFloor(11.5,13,13,2.5,0x0a100a,0x1a401a,'BOB');
-// Terceros: tanks at gx 1-3, gz 5.5-13
-addZoneFloor(2,9.5,4,9,0x100e14,0x3a1a44,'TERCEROS');
+addZoneFloor(17.5,2.5,7,5,0x0e1a10,0x1a5a2a,'SALA DE TANQUES');
+addZoneFloor(17,-4.75,6,3,0x0e1218,0x1a2a4a,'PULMONES AASTED');
+addZoneFloor(14.5,9.5,11,2,0x140e0e,0x4a1a1a,'EX DELVER');
+addZoneFloor(6,8.5,4,5,0x0e0e1a,0x2a2a50,'CENTRO DE MASA');
+addZoneFloor(13,14,14,2,0x0a100a,0x1a401a,'BOB');
+addZoneFloor(-1,5.5,3,10,0x100e14,0x3a1a44,'TERCEROS');
 
 // ─── LINE SOURCE MACHINES (industrial tank style) ───────
 const LINE_NODES={};
 const LINE_DEFS=[
-  {key:"Línea 1",x:3,   z:-4,col:0x4d9eff},
-  {key:"Línea 2",x:8,   z:-4,col:0xb47fff},
-  {key:"Línea 3",x:13,  z:-4,col:0x4dce6a},
-  {key:"Línea 4",x:18,  z:-4,col:0xffa657},
+  {key:"Línea 1",x:5,   z:2.5,col:0x4d9eff},
+  {key:"Línea 2",x:7,   z:2.5,col:0xb47fff},
+  {key:"Línea 3",x:9,   z:2.5,col:0x4dce6a},
+  {key:"Línea 4",x:11,  z:2.5,col:0xffa657},
 ];
 const lineBoxMeshes=[];
 
@@ -1324,12 +1322,33 @@ cv.addEventListener('mousemove',e=>{
 });
 
 // ═══════════════════ ORBIT ═══════════════════
-let drag=false,px=0,py=0;
-cv.addEventListener('mousedown',e=>{if(e.button===0){drag=true;cv.style.cursor='grabbing';}px=e.clientX;py=e.clientY;});
-window.addEventListener('mouseup',()=>{drag=false;cv.style.cursor='grab';});
+let drag=false,panning=false,px=0,py=0;
+cv.addEventListener('mousedown',e=>{
+  px=e.clientX;py=e.clientY;
+  if(e.button===0){drag=true;cv.style.cursor='grabbing';}
+  if(e.button===2){panning=true;cv.style.cursor='move';}
+});
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+window.addEventListener('mouseup',()=>{drag=false;panning=false;cv.style.cursor='grab';});
 window.addEventListener('mousemove',e=>{
-  if(!drag)return;theta-=(e.clientX-px)*0.005;phi=Math.max(0.08,Math.min(1.52,phi+(e.clientY-py)*0.005));
-  px=e.clientX;py=e.clientY;updCam();
+  const dx=e.clientX-px, dy=e.clientY-py;
+  px=e.clientX;py=e.clientY;
+  if(drag){
+    theta-=dx*0.005;
+    phi=Math.max(0.08,Math.min(1.52,phi+dy*0.005));
+    updCam();
+  }
+  if(panning){
+    // Move target in camera's horizontal and vertical plane
+    const panSpeed=rad*0.0012;
+    const sinT=Math.sin(theta), cosT=Math.cos(theta);
+    // Horizontal pan (left/right) — perpendicular to view direction
+    camT.x += (dx*cosT)*panSpeed;
+    camT.z -= (dx*sinT)*panSpeed;
+    // Vertical pan (up/down)
+    camT.y -= dy*panSpeed*0.8;
+    updCam();
+  }
 });
 cv.addEventListener('wheel',e=>{rad=Math.max(4,Math.min(70,rad+e.deltaY*0.04));updCam();e.preventDefault();},{passive:false});
 
